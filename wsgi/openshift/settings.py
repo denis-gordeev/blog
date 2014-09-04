@@ -20,7 +20,7 @@ if os.environ.has_key('OPENSHIFT_DB_PORT'):
 
 PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
 if ON_OPENSHIFT:
-    DEBUG = bool(os.environ.get('DEBUG', False))
+    DEBUG = True
     if DEBUG:
         print("WARNING: The DEBUG environment is set to True.")
 else:
