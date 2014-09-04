@@ -4,6 +4,7 @@ import imp, os
 
 # a setting to determine whether we are running on OpenShift
 ON_OPENSHIFT = False
+
 if os.environ.has_key('OPENSHIFT_REPO_DIR'):
     ON_OPENSHIFT = True
 if os.environ.has_key('OPENSHIFT_APP_NAME'):
@@ -36,8 +37,8 @@ if ON_OPENSHIFT:
     # with rhc cartridge add (see /README in this git repo)
     DATABASES = {
         'default': {
-'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-'NAME': DB_NAME, # Or path to database file if using sqlite3.
+'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+'NAME': os.path.join(PROJECT_DIR, 'sqlite3.db'), # Or path to database file if using sqlite3.
 'USER': DB_USER, # Not used with sqlite3.
 'PASSWORD': DB_PASSWD, # Not used with sqlite3.
 'HOST': DB_HOST, # Set to empty string for localhost. Not used with sqlite3.
