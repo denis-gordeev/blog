@@ -18,10 +18,10 @@ class TagsField(models.Field):
 
     # http://www.djangosnippets.org/snippets/1491/
 '''
-    __metaclass__=models.SubfieldBase
+    __metaclass__= models.SubfieldBase
     SPLIT_CHAR=u';'
     def __init__(self, *args, **kwargs):
-        self.internal_type=kwargs.pop('internal_type', 'TextField') # or CharField
+        self.internal_type=kwargs.pop('internal_type', 'CharField') # or CharField
         super(TagsField, self).__init__(*args, **kwargs)
 
     def to_python(self, value):
@@ -47,10 +47,11 @@ class TagsField(models.Field):
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=200)
-    timestamp = models.DateTimeField('date published')
-    tags = TagsField()
+    timestamp = models.DateTimeField()
     body = models.TextField()
-
+    #tags = TagsField()
+    def __unicode__(self):
+        return self.title
 class BlogPostAdmin(admin.ModelAdmin):
     list_display = ('title', 'timestamp')
 admin.site.register(BlogPost, BlogPostAdmin)
