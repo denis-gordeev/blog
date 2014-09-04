@@ -49,7 +49,7 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=200)
     timestamp = models.DateTimeField('date published')
     tags = TagsField()
-    body = text = models.TextField()
+    body = models.TextField()
 
 class BlogPostAdmin(admin.ModelAdmin):
     list_display = ('title', 'timestamp')
