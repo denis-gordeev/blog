@@ -45,7 +45,7 @@ class TagsField(models.Field):
         assert not kwargs, kwargs
         return forms.MultipleChoiceField(choices=self.choices)
 
-class Header(models.Model):
+class BlogPost(models.Model):
     title = models.CharField(max_length=200)
     timestamp = models.DateTimeField('date published')
     tags = TagsField()
