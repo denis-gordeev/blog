@@ -2,8 +2,7 @@
 a blog model
 '''
 from django.db import models
-
-from django.db import models
+from django.contrib import admin
 from django import forms
 
 class TagsField(models.Field):
@@ -47,9 +46,11 @@ class TagsField(models.Field):
         return forms.MultipleChoiceField(choices=self.choices)
 
 class Header(models.Model):
-    header_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+    title = models.CharField(max_length=200)
+    timestamp = models.DateTimeField('date published')
     tags = TagsField()
+    body = text = models.TextField()
 
-class Message(models.Model):
-    text = models.TextField()
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'timestamp')
+admin.site.register(BlogPost, BlogPostAdmin)
