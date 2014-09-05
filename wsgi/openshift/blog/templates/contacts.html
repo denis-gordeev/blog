@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<script>
+    function my_age(){
+    var d = new Date();
+    var age = 0;
+    var time = [d.getFullYear(),d.getMonth(),d.getDate()];
+    if (time[2]<12 && time[1]+1<=2){
+        age -= 1;
+    };
+    age += time[0]-1992;
+    return age
+};
+</script>
+<body>
+<form class='post_body'>
+<h3 ><small>My name is</small> Denis<small>.</small></h3>
+<h3 id='age'><small>I was born on the 12 February 1992. So I'm </small>  </h3>
+<script>
+$(document).ready(function(){
+$("#age").append(my_age()+'.');
+});
+</script>
+</form>
+</body>
+{% endblock %}
