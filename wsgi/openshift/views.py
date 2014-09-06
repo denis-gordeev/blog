@@ -10,7 +10,8 @@ from django.http import HttpResponse
 
 
 def home(request):
-    return redirect('/blog/')
+    if request.method == "GET":
+        return redirect('/blog/')
 
 @csrf_protect
 def chat(request):
