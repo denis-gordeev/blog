@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.views.generic import ListView, DetailView, TemplateView
 from blog.models import BlogPost
 from django.contrib.syndication.views import Feed
+from views import chat
 
 class BlogFeed(Feed):
     title = "Of men and crocodiles"
@@ -31,4 +32,5 @@ urlpatterns = patterns('blog.views',
     url(r'^feed/$', BlogFeed()),
     url(r'^links$', TemplateView.as_view(template_name='links.html'), name="links"),
     url(r'^contacts$', TemplateView.as_view(template_name='contacts.html'), name="contacts"),
+    url(r'^chat/$', chat, name='chat'),
 )

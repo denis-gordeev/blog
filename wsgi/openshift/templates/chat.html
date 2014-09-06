@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<head>
+<title>Of crocodiles and pythons: Chat</title>
+<h2>Chat</h2>
+<script type="text/javascript">
+
+  $.ajaxSetup({beforeSend: function(xhr, settings){
+    xhr.setRequestHeader('X-CSRFToken',
+                         '{{ csrf_token }}');
+  }});
+  $(document).ready(function(){
+var random_message = 'A new talk begins';
+var random_greeting = 'Hi';
+random_name = 'ChatBot';
+$('p').append(random_message+'<br>');
+$('p').append(random_name + ': ' + random_greeting);
+});
+        $(document).ready(function(){
+            $("#form1").submit(function(e){
+                var message = $('#message').val();
+                $('p').append('<br>you write: '+ message);
+                var data = {'message' : message}
+                $.post( "/chat/", data, function( data ) {
+                $('p').append( '<br>'+random_name + ' writes: '+ data );
+                });
+                return false;
+            });
+        });
+
+    </script>
+    <title>{{title}}</title>
+</head>
+<body>
+    <form method="POST" action="" id="form1">
+    {% csrf_token %}
+    <div class="jumbotron">
+<p id='text'></p>
+<input value="Send" id='send' type="submit" class="btn btn-primary">
+<input id='message'>
+    </div>
+    </form>
+</body>
+</html>
+
+{% endblock %}
