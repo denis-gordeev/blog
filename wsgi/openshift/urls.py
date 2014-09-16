@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import ListView, DetailView, TemplateView
 from views import chat
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 # Uncomment the next two lines to enable the admin:
@@ -14,3 +15,9 @@ urlpatterns = patterns('',
     url(r'^chat/$', chat, name='chat'),
 )
 
+
+urlpatterns += patterns('', (
+    r'^static/(?P<path>.*)$',
+    'django.views.static.serve',
+    {'document_root': settings.STATIC_ROOT}
+))
