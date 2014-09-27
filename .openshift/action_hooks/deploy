@@ -18,3 +18,9 @@ fi
 
 echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/openshift/manage.py collectstatic --noinput'"
 python "$OPENSHIFT_REPO_DIR"wsgi/openshift/manage.py collectstatic --noinput
+
+if [ ! -d $OPENSHIFT_DATA_DIR/media ]; then
+mkdir $OPENSHIFT_DATA_DIR/media
+fi
+ 
+ln -sf $OPENSHIFT_DATA_DIR/media $OPENSHIFT_REPO_DIR/wsgi/static/media
