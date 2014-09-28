@@ -20,7 +20,7 @@ class BlogFeed(Feed):
 
 urlpatterns = patterns('blog.views',
     url(r'^$', ListView.as_view(
-        queryset=BlogPost.objects.all().order_by("-created")[:10],
+        queryset=BlogPost.objects.all().order_by("-created"),
         template_name='blog.html')),
     url(r'^(?P<pk>\d+)/$', DetailView.as_view(
         model=BlogPost,
@@ -32,4 +32,7 @@ urlpatterns = patterns('blog.views',
     url(r'^feed/$', BlogFeed()),
     url(r'^links$', TemplateView.as_view(template_name='links.html'), name="links"),
     url(r'^contacts$', TemplateView.as_view(template_name='contacts.html'), name="contacts"),
+    url(r'^solutions$', ListView.as_view(
+        queryset=BlogPost.objects.filter(tags__name='solutions').order_by("-created"),
+        template_name='blog.html')),
 )

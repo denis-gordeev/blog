@@ -23,7 +23,24 @@ h2{margin:20;}
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script><div class="page-header">
 <h1>Of crocodiles and pythons</h1>
 </div>
+  <script type="text/javascript">
 
+  $.ajaxSetup({beforeSend: function(xhr, settings){
+    xhr.setRequestHeader('X-CSRFToken',
+                         '{{ csrf_token }}');
+  }});
+$(document).ready(function(){
+  $("#search").submit(function(e){
+    var message = $('#message').val();
+    $('p').append('<br>you write: '+ message);
+    var data = {'message' : message}
+    $.post( "/chat/", data, function( data ) {
+    $('p').append( '<br>'+random_name + ' writes: '+ data );
+    });
+  return false;
+  });
+});
+    </script>
 </head>
 <body>
 <nav class="navbar navbar-default" role="navigation">
@@ -41,12 +58,12 @@ h2{margin:20;}
       <ul class="nav navbar-nav">
         <li><a href="/blog/archives">Archive</a></li>
         <li><a href="/blog/contacts">Contacts</a></li>
+        <li><a href="/blog/solutions">Solutions</a></li>
       </ul>
-      <form class="navbar-form navbar-left" role="search">
+      <form id = 'search' class="navbar-form navbar-left" role="search">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search">
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
       <li><a href="http://ru-textprocessing.rhcloud.com/">POS-tagging</a></li>
