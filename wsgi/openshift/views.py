@@ -13,7 +13,6 @@ def home(request):
     if request.method == "GET":
         return redirect('/blog/')
     if request.is_ajax():
-        print '1'
         search = request.POST['search']
         print 'lolsearch'
         if search.length() > 0:
@@ -21,7 +20,7 @@ def home(request):
             for post in posts:
                 if post.title.startswith(search):
                     result = post.title
-    return HttpResponse(result)
+        return HttpResponse(result)
 
 @csrf_protect
 def chat(request):
