@@ -7,20 +7,24 @@ from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_protect
 from django.template import RequestContext
 from django.http import HttpResponse
-
+from blog.models import BlogPost
+import json
 
 def home(request):
     if request.method == "GET":
         return redirect('/blog/')
     if request.is_ajax():
         search = request.POST['search']
-        print 'lolsearch'
-        if search.length() > 0:
+        result = {}
+        if len(search) > 0:
             posts = BlogPost.objects.all()
+            tags = BlogPost.objects.filter(tags__name=search)
+            for tag in tags:
+                result['tag/'+tag] = tag
             for post in posts:
-                if post.title.startswith(search):
-                    result = post.title
-        return HttpResponse(result)
+                if post.title.lower().startswith(search.lower()):
+                    result[post.id] = post.title
+        return HttpResponse(json.dumps(result), content_type = "application/json")
 
 @csrf_protect
 def chat(request):

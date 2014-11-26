@@ -46,7 +46,9 @@ h2{margin:20;}
       </ul>
       <form class="navbar-form navbar-left" role="search" id="search">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search" id="search-input" method="POST">
+          <input type="search" class="form-control" placeholder="Search" id="search-input" method="POST" autocomplete="true">
+          <ul class="search-ac" id="search-ac">
+          <ul>
         </div>
       </form>
       <ul class="nav navbar-nav navbar-right">
@@ -69,6 +71,12 @@ h2{margin:20;}
 </nav>
 
   <script type="text/javascript">
+ function fill_the_search(data){
+ document.getElementById('search-ac').innerHTML = '';
+  for (key in data){
+  document.getElementById('search-ac').innerHTML += '<li><a href="http://blog-textprocessing.rhcloud.com/blog/'+key+'">'+data[key]+"<br></a></li>";
+  }
+ }
 
   $.ajaxSetup({beforeSend: function(xhr, settings){
     xhr.setRequestHeader('X-CSRFToken',
@@ -79,12 +87,15 @@ $(document).ready(function(){
     e.preventDefault();
     var search = $('#search-input').val();
     var data = {'search' : search};
+    write = '';
     $.ajax({
             type: "POST",
             url: "/",
             data: {'search' : search},
             contentType: "application/x-www-form-urlencoded",
-            success: function(data){alert(data);}
+            success: function(data){
+            fill_the_search(data)
+            }
     });
   });
 });
