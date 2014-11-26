@@ -9,6 +9,7 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from blog.models import BlogPost
 import json
+from taggit.models import Tag
 
 def home(request):
     if request.method == "GET":
@@ -18,9 +19,10 @@ def home(request):
         result = {}
         if len(search) > 0:
             posts = BlogPost.objects.all()
-            tags = BlogPost.objects.filter(tags__name=search)
+            tags = Tag.objects.all()
             for tag in tags:
-                result['tag/'+tag] = tag
+                if unicode(tag).lower().startswith(search.lower()):
+                    result['tag/'+ unicode(tag)] = unicode(tag)+'#tag'
             for post in posts:
                 if post.title.lower().startswith(search.lower()):
                     result[post.id] = post.title
