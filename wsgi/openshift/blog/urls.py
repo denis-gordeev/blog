@@ -1,11 +1,11 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import ListView, DetailView, TemplateView
-from blog.models import BlogPost
+from blog.views import PostList, PostDetails
+from models import BlogPost
 from django.contrib.syndication.views import Feed
-from views import chat
 
 class BlogFeed(Feed):
-    title = "Of men and crocodiles"
+    title = "Of crocodiles and pythons"
     link = "/blog/feed/"
 
     def items(self):
@@ -15,16 +15,12 @@ class BlogFeed(Feed):
     def item_body(self, item):
         return item.body
     def item_link(self,item):
-        return u"/blog/%d" % item.id
+        return r"/blog/%d" % item.id
 
 
 urlpatterns = patterns('blog.views',
-    url(r'^$', ListView.as_view(
-        queryset=BlogPost.objects.all().order_by("-created"),
-        template_name='blog.html')),
-    url(r'^(?P<pk>\d+)/$', DetailView.as_view(
-        model=BlogPost,
-        template_name='post.html')),
+    url(r'^$', PostList.as_view(), name=u'postlist'),
+    url(r'^(?P<pk>\d+)/$', PostDetails.as_view(), name='postdetails'),
     url(r'^archives/$', ListView.as_view(
         queryset=BlogPost.objects.all().order_by("-created"),
         template_name='archives.html')),

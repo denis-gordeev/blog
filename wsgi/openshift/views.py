@@ -10,6 +10,9 @@ from django.http import HttpResponse
 from blog.models import BlogPost
 import json
 from taggit.models import Tag
+from django.views.generic import ListView
+from blog.forms import SearchForm
+
 
 def home(request):
     if request.method == "GET":

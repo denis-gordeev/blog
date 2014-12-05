@@ -3,14 +3,14 @@
 {% block content %}
 
 
-<h2><a href="/blog/{{object.id}}">{{object.title}}</a></h2>
+<h2><a href="/blog/{{object.id}}">{{post.title}}</a></h2>
 
 <div class="post_meta">
-{{ object.created }}
+{{ post.created }}
 </div>
 
 <div class='post_body'>
-{{ object.body|safe|linebreaks }}
+{{ post.body|safe|linebreaks }}
 </div>
 
 <div class='tags'>
@@ -19,4 +19,24 @@
 {% if not forloop.last %}, {% endif %}
 {% endfor %}
 </div>
+<h4 id="comments">Leave a commentary</h4>
+    <section >
+      <form class="form-group" action="{% url "postdetails" pk=post.id %}" method="POST" >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Send" class="btn btn-default"/>
+      </form>
+      {% for commentary in post.commentary_set.all %}
+        <article class="well">
+          <p>{{ commentary.author }} said on <time>{{ commentary.created}}</time>:</p>
+          <div>{{ commentary.body }}</div>
+        </article>
+        {% if not forloop.last %}
+          <hr/>
+        {% endif %}
+      {% empty %}
+        <p class="label label-primary">No comments at the moment.</p>
+      {% endfor %}
+    </section>
+  </article>
 {% endblock %}

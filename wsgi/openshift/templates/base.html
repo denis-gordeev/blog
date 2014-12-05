@@ -2,6 +2,9 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><meta charset="utf-8">
 <style>
+.list-group{
+  position:absolute
+}
 body {
     padding-top: 60px;
     padding-bottom: 100px;
@@ -16,6 +19,9 @@ h2{margin:20;}
 }
 .tags {
     margin:20;
+}
+.label-as-badge {
+    border-radius: 1em;
 }
 </style>
 <title>Of crocodiles and pythons</title>
@@ -46,13 +52,15 @@ h2{margin:20;}
         <li><a href="/blog/contacts">About me</a></li>
         <li><a href="/blog/solutions">Solutions</a></li>
       </ul>
-      <form class="navbar-form navbar-left" id="search" results="5">
+<!-- Search -->
+      <form class="navbar-form navbar-left" id="search" results="5" action="{% url "search" %}" method="GET">
         <div class="form-group">
-          <input type="search" class="form-control" placeholder="Search" id="search-input" method="POST" autocomplete="off">
+          <input type="search"name="{{ searchform.query.name }}" class="form-control" placeholder="Search" id="search-input" method="POST" autocomplete="off">
           <ul class="list-group" id="search-ac">
-          <ul>
+          </ul>
         </div>
       </form>
+
       <ul class="nav navbar-nav navbar-right">
       <li><a href="http://ru-textprocessing.rhcloud.com/">POS-tagging</a></li>
       <li class="active"><a href="/chat">ChatBot</a></li>
@@ -84,7 +92,7 @@ h2{margin:20;}
 //    $(this).removeClass("list-group-item active");
 //  }
 //  );
-y  }
+  }
  };
   $.ajaxSetup({beforeSend: function(xhr, settings){
     xhr.setRequestHeader('X-CSRFToken',

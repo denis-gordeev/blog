@@ -18,6 +18,7 @@ if os.environ.has_key('OPENSHIFT_POSTGRESQL_DB_HOST'):
 if os.environ.has_key('OPENSHIFT_POSTGRESQL_DB_PORT'):
     DB_PORT = os.environ['OPENSHIFT_POSTGRESQL_DB_PORT']
 
+
 PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
 if ON_OPENSHIFT:
     DEBUG = True
@@ -163,6 +164,16 @@ TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'templates'),
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    "blog.context_processors.searchform",
+)
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -175,6 +186,7 @@ INSTALLED_APPS = (
     'blog',
     # Uncomment the next line to enable admin documentation:
      'django.contrib.admindocs',
+     'south',
 )
 
 # A sample logging configuration. The only tangible logging
