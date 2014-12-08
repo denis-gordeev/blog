@@ -37,9 +37,21 @@ class Commentary(models.Model):
     objects = models.Manager()
     class Meta:
         verbose_name_plural = u'commentaries'
-        ordering = [u'-created']
+        ordering = [u'created']
+
 class Vote(models.Model):
     voter = models.ForeignKey(User)
     commentary = models.ForeignKey(Commentary)
     def __unicode__(self):
         return "%s voted %s"(self.voter.username, self.commentary.title)
+
+class UserProfile(models.Model):
+    # This line is required. Links UserProfile to a User model instance.
+    user = models.OneToOneField(User)
+    # The additional attributes we wish to include.
+    picture = models.ImageField(upload_to='profile_images', blank=True)
+    crocies_rep = models.IntegerField(default=0)
+    pythons_rep = models.IntegerField(default=0)
+    # Override the __unicode__() method to return out something meaningful!
+    def __unicode__(self):
+        return self.user.username

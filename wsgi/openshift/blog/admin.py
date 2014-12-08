@@ -1,5 +1,5 @@
 from django.contrib import admin
-from blog.models import BlogPost, Commentary, Vote
+from blog.models import BlogPost, Commentary, Vote, UserProfile
 
 class CommentaryInline(admin.StackedInline):
     model = Commentary
@@ -21,3 +21,5 @@ class CommentaryAdmin(admin.ModelAdmin):
     list_filter = ['created', 'author']
     search_fields = ['author', 'body', 'post__title']
 admin.site.register(Commentary, CommentaryAdmin)
+
+admin.site.register(UserProfile)

@@ -19,6 +19,7 @@
 {% if not forloop.last %}, {% endif %}
 {% endfor %}
 </div>
+{% if user.is_authenticated %}
 <h4 id="comments">Leave a commentary</h4>
     <section >
       <form class="form-group" action="{% url "postdetails" pk=post.id %}" method="POST" >
@@ -26,6 +27,7 @@
         {{ form.as_p }}
         <input type="submit" value="Send" class="btn btn-default"/>
       </form>
+{% endif %}
       {% for commentary in post.commentary_set.all %}
         <article class="well">
           <p>{{ commentary.author }} said on <time>{{ commentary.created}}</time>:</p>
@@ -39,4 +41,5 @@
       {% endfor %}
     </section>
   </article>
+
 {% endblock %}
