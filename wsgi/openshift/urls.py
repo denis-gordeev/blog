@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^register/$', register, name='register'),
     url(r'^login/$', user_login, name='login'),
     url(r'^logout/$', user_logout, name='logout'),
+    url(r'^accounts/', include('allauth.urls')),
 )
 
 urlpatterns += staticfiles_urlpatterns()

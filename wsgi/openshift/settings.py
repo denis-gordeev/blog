@@ -164,7 +164,16 @@ TEMPLATE_DIRS = (
     os.path.join(PROJECT_DIR, 'templates'),
 )
 
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.core.context_processors.request",
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
@@ -173,6 +182,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
     "blog.context_processors.searchform",
+    # allauth specific context processors
+    "allauth.account.context_processors.account",
+    "allauth.socialaccount.context_processors.socialaccount",
 )
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -185,8 +197,18 @@ INSTALLED_APPS = (
     'taggit',
     'blog',
     # Uncomment the next line to enable admin documentation:
-     'django.contrib.admindocs',
-     'south',
+    'django.contrib.admindocs',
+    'south',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # ... include the providers you want to enable:
+    #'allauth.socialaccount.providers.bitbucket',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.github',
+    #'allauth.socialaccount.providers.google',
+    #'allauth.socialaccount.providers.twitter',
+    #'allauth.socialaccount.providers.vk',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -211,3 +233,13 @@ LOGGING = {
         },
     }
 }
+LOGIN_REDIRECT_URL = '/'
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_PROVIDERS = \
+    {'facebook':
+       {'SCOPE': ['email', 'publish_stream'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'METHOD': 'oauth2',
+        'LOCALE_FUNC': lambda request: 'en_US',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v2.2'}}

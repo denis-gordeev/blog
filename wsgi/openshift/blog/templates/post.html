@@ -27,12 +27,22 @@
         {{ form.as_p }}
         <input type="submit" value="Send" class="btn btn-default"/>
       </form>
+      {% else %}
 {% endif %}
       {% for commentary in post.commentary_set.all %}
         <article class="well">
-          <p>{{ commentary.author }} said on <time>{{ commentary.created}}</time>:</p>
+          <p><img src="{{ request.user.profile.profile_image_url }}"/>
+          {{ commentary.author }} said on <time>{{ commentary.created}}</time>:</p>
           <div>{{ commentary.body }}</div>
+          <br>
+          <div
+  class="fb-like"
+  data-share="false"
+  data-width="450"
+  data-show-faces="false">
+</div>
         </article>
+
         {% if not forloop.last %}
           <hr/>
         {% endif %}

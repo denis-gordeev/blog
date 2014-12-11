@@ -78,11 +78,11 @@ textarea {
             <li><a href="#">Separated link</a></li>
           </ul>
         </li>
-        {% if user.is_authenticated %}
+        {% if request.user.is_authenticated %}
         <li><a href="/logout/">Logout {{ user.username }}</a></li>
         {% else %}
-        <li><a href="/register/">Register</a></li>
-        <li><a href="/login/">Login</a></li>
+        <!--<li><a href="/register/">Register</a></li>-->
+        <li><a href="/accounts/login/">Login</a></li>
         {% endif %}
       </ul>
 
@@ -133,6 +133,23 @@ $(document).ready(function(){
 //});
 
     </script>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '572501472882740',
+      xfbml      : true,
+      version    : 'v2.2'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 </body>
 {% block content %}
 {% endblock %}
