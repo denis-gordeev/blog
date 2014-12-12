@@ -72,7 +72,8 @@ TIME_ZONE = 'Europe/Moscow'
 LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
-
+if ON_OPENSHIFT:
+    SITE_ID = 3
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
