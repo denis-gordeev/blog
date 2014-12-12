@@ -31,7 +31,7 @@
 {% endif %}
       {% for commentary in post.commentary_set.all %}
         <article class="well">
-          <p><img src="{{ request.user.profile.profile_image_url }}"/>
+          <!-- <p><img src="{{ request.user.profile.profile_image_url }}"/> -->
           {{ commentary.author }} said on <time>{{ commentary.created}}</time>:</p>
           <div>{{ commentary.body }}</div>
           <br>
